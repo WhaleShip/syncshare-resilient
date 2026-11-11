@@ -21,13 +21,27 @@
 
 ### Chrome
 
-Текущий релиз **1.1.6.2 предназначен для Firefox** и использует Manifest V2. В Chrome 139 и новее поддержка этого формата удалена, поэтому установить эту сборку через «Загрузить распакованное расширение» не получится. Для Chrome нужна отдельная версия на Manifest V3; готовой сборки в этом репозитории пока нет. Сейчас используй Firefox по инструкции выше.
+1. Скачай [ZIP для Chrome 1.1.6.3 — Manifest V3](https://github.com/WhaleShip/syncshare-resilient/releases/download/v1.1.6.3/syncshare-resilient-chrome-1.1.6.3.zip).
+2. **Распакуй ZIP** в отдельную папку и сохрани её на компьютере.
+3. В Chrome вставь в адресную строку:
 
-[О прекращении поддержки Manifest V2 в Chrome](https://developer.chrome.com/docs/extensions/develop/migrate/mv2-deprecation-timeline).
+   ```text
+   chrome://extensions/
+   ```
+
+4. Включи **«Режим разработчика»** справа вверху.
+5. Нажми **«Загрузить распакованное расширение»** и выбери папку, внутри которой лежит `manifest.json`.
+6. В списке появится **SyncShare Resilient 1.1.6.3**. Отключи другую установленную SyncShare, чтобы две версии не обрабатывали страницу одновременно.
+7. Обнови страницу с тестом, предварительно сохранив ответы.
+
+После перезапуска Chrome расширение остаётся установленным. Не удаляй и не перемещай распакованную папку. При обновлении замени её содержимое новой сборкой и нажми кнопку перезагрузки на карточке расширения. Собирать код самостоятельно не нужно.
+
+Это отдельная экспериментальная сборка на базе **1.1.6 с нашими исправлениями**, а не официальный выпуск 2.22.0; новые ИИ-функции в неё не входят. Нужен Chrome 120 или новее. Для Firefox используй ZIP из предыдущего раздела.
 
 ## About
 
-Unofficial, experimental compatibility work for the Firefox 1.1.6 release.
+Unofficial, experimental compatibility work based on the Firefox 1.1.6 release,
+with separate Firefox MV2 and Chrome MV3 packages.
 The original project by Naloaty is licensed under MIT; its archived source
 history is preserved here. This fork is not affiliated with the original author.
 
@@ -41,12 +55,13 @@ in Moodle, and allows a longer bounded wait for solution requests. It does not
 provide its own answer service. The extension still relies on the upstream
 SyncShare service and retains its existing data-sharing behavior.
 
-Version **1.1.6.2** passes 15 local regression tests. A user report confirms
+Firefox **1.1.6.2** passes 15 local regression tests; Chrome **1.1.6.3** passes
+those tests plus 6 service-worker lifecycle tests. A user report confirms
 that the first compatibility patch reached the solution-request stage; an
 upstream request then aborted. The latest timeout adjustment has not yet been
 verified against that live service flow. This is not a verified stable release.
 
-The package is unsigned and intended for temporary Firefox loading. Permanent
+The Firefox package is unsigned and intended for temporary loading. Permanent
 distribution requires a separate Mozilla signing process and a fork-specific
 extension identity. No signing checks need to be disabled for temporary loading.
 

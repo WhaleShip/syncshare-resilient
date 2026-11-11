@@ -3,7 +3,8 @@
   "private": true,
   "type": "module",
   "scripts": {
-    "test": "node --test --test-isolation=none test/*.test.mjs"
+    "test": "node --test --test-isolation=none test/compatibility.test.mjs test/network.test.mjs",
+    "test:chrome": "SYNCSHARE_BUILD=chrome node --test --test-isolation=none test/*.test.mjs"
   },
   "devDependencies": {
     "jsdom": "26.1.0"

@@ -1,4 +1,4 @@
-# Firefox 1.1.6 compatibility patch
+# SyncShare 1.1.6 compatibility builds
 
 This directory contains readable replacement modules, a reproducible packaging
 script, and tests that execute the actual bundled extension modules in jsdom.
@@ -42,6 +42,51 @@ passing against the patch. The tests use synthetic page fixtures and replace
 browser messaging/network boundaries. They do not contact a live Moodle site
 or submit quiz data. Local success is not a guarantee of upstream API behavior.
 
+## Chrome Manifest V3
+
+The Chrome variant is version **1.1.6.3**. It is based on the same pinned 1.1.6
+package and compatibility patches, not on the official 2.x extension. It adds:
+
+- A classic service worker importing the packaged Webpack bundles; no DOM shim.
+- Synchronous registration of all background handlers at worker startup.
+- Promise propagation for settings writes and attempt/review uploads, so the
+  message response remains pending until the operation finishes.
+- MV3 `action`, `host_permissions`, resource and CSP declarations. No new host
+  access or service endpoints; no remote scripts or dynamic evaluation.
+
+```sh
+python3 build_chrome.py
+npm test
+npm run test:chrome
+```
+
+Outputs: `syncshare-resilient-chrome-1.1.6.3.zip` and `chrome/`. This command also
+rebuilds the unchanged Firefox 1.1.6.2 ZIP. Firefox has 15 regression tests;
+Chrome runs the same 15 plus 6 worker tests. The worker tests execute the full
+bundles without a DOM, with synthetic HTTP and browser-storage boundaries.
+
+For installation, extract the Chrome ZIP, open `chrome://extensions/`, enable
+Developer mode and choose **Load unpacked**, selecting the folder containing
+`manifest.json`. Keep that folder in place. Disable any other SyncShare copy
+before reloading Moodle pages. Requires Chrome 120+.
+
+An optional browser check loads the unpacked extension in a fresh temporary
+profile, checks popup settings, stops its service worker through CDP, then checks
+that a message wakes the worker and persisted settings are still available:
+
+```sh
+node test/chrome-smoke.mjs
+```
+
+This check requires only Node.js 24 and an installed Chrome/Chromium. Use
+`CHROME_BIN` to specify its executable (default: `google-chrome`). It uses raw CDP
+without attaching a debugger to the worker, which would prevent its shutdown.
+The test uses the experimental CDP
+`Extensions.loadUnpacked` command, so use a recent Chrome/Chromium (not the
+minimum supported extension version). It does not contact a live Moodle/API.
+Successful loading does not establish compatibility with the upstream service.
+Verified with Chrome 155.0.8059.39 on Linux.
+
 ## Temporary installation
 
 1. Open `about:debugging#/runtime/this-firefox` in Firefox.
@@ -77,7 +122,9 @@ permissions and service endpoints. It does not add telemetry, a new destination,
 or an independent backend. Review that behavior before using it.
 
 Only `manifest.json`, `src/commons.js`, `src/quizattempt.js`, and
-`src/background.js` are modified. The original signature is removed because it
+`src/background.js` are modified in the Firefox output. Chrome additionally
+includes `service-worker.js`, with further manifest/background adaptations.
+The original signature is removed because it
 is invalid after modification; the MIT license is included in the output ZIP.
 No private page captures, user identifiers, local paths, or test execution logs
 are included in this source directory.
