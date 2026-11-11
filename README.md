@@ -50,6 +50,8 @@ The package is unsigned and intended for temporary Firefox loading. Permanent
 distribution requires a separate Mozilla signing process and a fork-specific
 extension identity. No signing checks need to be disabled for temporary loading.
 
+Спасибо https://github.com/naloaty за палочку :D
+
 ## Original project
 
 Source: [naloaty/syncshare-extension](https://github.com/naloaty/syncshare-extension).
