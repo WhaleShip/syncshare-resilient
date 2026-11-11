@@ -1,5 +1,32 @@
 # SyncShare Resilient
 
+## Установка
+
+### Firefox (Windows и Linux)
+
+1. Скачай [готовый ZIP расширения 1.1.6.2](https://github.com/WhaleShip/syncshare-resilient/releases/download/v1.1.6.2/syncshare-resilient-1.1.6.2.zip) на нужный компьютер. Собирать и распаковывать не нужно.
+2. В Firefox вставь в адресную строку:
+
+   ```text
+   about:debugging#/runtime/this-firefox
+   ```
+
+3. Нажми **«Загрузить временное дополнение…»** и выбери этот ZIP. Если предыдущая временная версия уже загружена, сначала удали её.
+4. В списке появится **SyncShare Resilient 1.1.6.2**.
+5. Обнови страницу с тестом, предварительно сохранив ответы.
+
+После полного закрытия Firefox расширение придётся загрузить заново — используй тот же ZIP, повторная сборка не нужна. Для постоянной установки потребуется подпись Mozilla.
+
+[Инструкция Mozilla](https://extensionworkshop.com/documentation/develop/temporary-installation-in-firefox/). Архив **Source code** на странице релиза содержит исходники; для установки нужен ZIP по ссылке выше.
+
+### Chrome
+
+Текущий релиз **1.1.6.2 предназначен для Firefox** и использует Manifest V2. В Chrome 139 и новее поддержка этого формата удалена, поэтому установить эту сборку через «Загрузить распакованное расширение» не получится. Для Chrome нужна отдельная версия на Manifest V3; готовой сборки в этом репозитории пока нет. Сейчас используй Firefox по инструкции выше.
+
+[О прекращении поддержки Manifest V2 в Chrome](https://developer.chrome.com/docs/extensions/develop/migrate/mv2-deprecation-timeline).
+
+## About
+
 Unofficial, experimental compatibility work for the Firefox 1.1.6 release.
 The original project by Naloaty is licensed under MIT; its archived source
 history is preserved here. This fork is not affiliated with the original author.
